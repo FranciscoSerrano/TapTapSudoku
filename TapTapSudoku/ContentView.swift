@@ -9,7 +9,24 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var board = Board()
+    @State private var selectedRow = -1
+    @State private var selectedCol = -1
+    @State private var selectedNum = 0
     let spacing = 2.0
+    
+    func highlightState(for row: Int, col: Int) -> CellView.HighlightState {
+        if row == selectedRow {
+            if col == selectedCol {
+                return .selected
+            } else {
+                return .highlighted
+            }
+        } else if col == selectedCol {
+            return .highlighted
+        } else {
+            return .standard
+        }
+    }
     
     var body: some View {
         NavigationStack {
@@ -18,8 +35,11 @@ struct ContentView: View {
                     ForEach(0..<9) { row in
                         GridRow {
                             ForEach(0..<9) { col in
-                                Rectangle().fill(.gray)
-                                    .aspectRatio(1, contentMode: .fit)
+                                CellView(number: board.playerBoard[row][col], selectedNumber: selectedNum, highlightState: highlightState(for: row, col: col), isCorrect: board.playerBoard[row][col] == board.fullBoard[row][col]) {
+                                    selectedRow = row
+                                    selectedCol = col
+                                    selectedNum = board.playerBoard[row][col]
+                                }
                                 if col == 2 || col == 5 {
                                     Spacer()
                                         .frame(width: spacing, height: 1)

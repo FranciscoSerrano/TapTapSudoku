@@ -12,6 +12,8 @@
 		F360F002297CF53A00C2C053 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F360F001297CF53A00C2C053 /* Assets.xcassets */; };
 		F360F005297CF53A00C2C053 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F360F004297CF53A00C2C053 /* Preview Assets.xcassets */; };
 		F360F00C297CFA3300C2C053 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = F360F00B297CFA3300C2C053 /* Board.swift */; };
+		F360F00E297D071E00C2C053 /* Color-Cells.swift in Sources */ = {isa = PBXBuildFile; fileRef = F360F00D297D071E00C2C053 /* Color-Cells.swift */; };
+		F360F010297D078500C2C053 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F360F00F297D078500C2C053 /* CellView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +23,8 @@
 		F360F001297CF53A00C2C053 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F360F004297CF53A00C2C053 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F360F00B297CFA3300C2C053 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		F360F00D297D071E00C2C053 /* Color-Cells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color-Cells.swift"; sourceTree = "<group>"; };
+		F360F00F297D078500C2C053 /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +59,8 @@
 			children = (
 				F360EFFD297CF53900C2C053 /* TapTapSudokuApp.swift */,
 				F360EFFF297CF53900C2C053 /* ContentView.swift */,
+				F360F00D297D071E00C2C053 /* Color-Cells.swift */,
+				F360F00F297D078500C2C053 /* CellView.swift */,
 				F360F00B297CFA3300C2C053 /* Board.swift */,
 				F360F001297CF53A00C2C053 /* Assets.xcassets */,
 				F360F003297CF53A00C2C053 /* Preview Content */,
@@ -141,8 +147,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F360F000297CF53900C2C053 /* ContentView.swift in Sources */,
+				F360F010297D078500C2C053 /* CellView.swift in Sources */,
 				F360EFFE297CF53900C2C053 /* TapTapSudokuApp.swift in Sources */,
 				F360F00C297CFA3300C2C053 /* Board.swift in Sources */,
+				F360F00E297D071E00C2C053 /* Color-Cells.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
