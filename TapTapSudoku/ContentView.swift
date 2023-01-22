@@ -8,10 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var board = Board()
+    @State private var board = Board(difficulty: .testing)
     @State private var selectedRow = -1
     @State private var selectedCol = -1
     @State private var selectedNum = 0
+    @State private var solved = false
+    @State private var showingNewGame = false
+    @State private var counts = [Int: Int]()
+
     let spacing = 2.0
     
     func highlightState(for row: Int, col: Int) -> CellView.HighlightState {
@@ -25,6 +29,48 @@ struct ContentView: View {
             return .highlighted
         } else {
             return .standard
+        }
+    }
+    
+    func enter(_ number: Int) {
+        if board.playerBoard[selectedRow][selectedCol] == number {
+            board.playerBoard[selectedRow][selectedCol] = 0
+            selectedNum = 0
+        } else {
+            board.playerBoard[selectedRow][selectedCol] = number
+            selectedNum = number
+        }
+    }
+    
+    func newGame(difficulty: Board.Difficulty) {
+        board = Board(difficulty: difficulty)
+        selectedRow = -1
+        selectedCol = -1
+        selectedNum = 0
+    }
+    
+    func updateCounts() {
+        solved = false
+        var newCounts = [Int: Int]()
+        var correctCount = 0
+        
+        for row in 0..<board.size {
+            for col in 0..<board.size {
+                let value = board.playerBoard[row][col]
+
+                if value == board.fullBoard[row][col] {
+                    newCounts[value, default: 0] += 1
+                    correctCount += 1
+                }
+            }
+        }
+        counts = newCounts
+        if correctCount == board.size * board.size {
+            Task {
+                try await Task.sleep(for: .seconds(0.5))
+                showingNewGame = true
+                solved = true
+            }
         }
     }
     
@@ -48,13 +94,49 @@ struct ContentView: View {
                         }
                         .padding(.bottom, row == 2 || row == 5 ? spacing : 0)
                     }
+                    
+                    HStack {
+                        ForEach(1..<10) { i in
+                            Button(String(i)) {
+                                enter(i)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .font(.largeTitle)
+                            .opacity(counts[i, default: 0] == 9 ? 0 : 1)
+                        }
+                    }
+                    .padding()
                 }
                 .padding(5)
             }
             .navigationTitle("TapTapSudoku")
+            .toolbar {
+                Button {
+                    showingNewGame = true
+                } label: {
+                    Label("Start a New Game", systemImage: "plus")
+                }
+            }
         }
         .preferredColorScheme(.dark)
         .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
+        .onAppear(perform: updateCounts)
+        .onChange(of: board) { _ in
+            updateCounts()
+        }
+        .alert("Start a new game", isPresented: $showingNewGame) {
+            ForEach(Board.Difficulty.allCases, id: \.self) { difficulty in
+                Button(String(describing: difficulty).capitalized) {
+                    newGame(difficulty: difficulty)
+                }
+            }
+
+            Button("Cancel", role: .cancel) { }
+        } message: {
+            if solved {
+                Text("You solved the board correctly - good job!")
+            }
+        }
     }
 }
 

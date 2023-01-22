@@ -59,6 +59,7 @@ struct CellView: View {
                 .background(highlightState.color)
         }
         .buttonStyle(.plain)
+        .accessibilityShowsLargeContentViewer()
     }
 }
 
